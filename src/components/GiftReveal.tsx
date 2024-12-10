@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import GiftSuggestions from './GiftSuggestions';
 
 const GiftReveal = ({ result }: { result: string }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,16 +19,17 @@ const GiftReveal = ({ result }: { result: string }) => {
         🎁
       </div>
       <div
-        className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${
+        className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-500 ${
           isOpen ? 'opacity-100' : 'opacity-0'
         }`}
       >
-        <p className="text-2xl font-christmas text-christmas-red">
+        <p className="text-2xl font-christmas text-christmas-red text-center">
           Tu dois offrir un cadeau à:<br />
           <span className="text-3xl font-bold text-christmas-gold">
             {result}
           </span>
         </p>
+        <GiftSuggestions />
       </div>
     </div>
   );
