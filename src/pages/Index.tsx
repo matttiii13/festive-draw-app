@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { supabase } from '@/lib/supabase';
 import { Card } from '@/components/ui/card';
 import EmailDialog from '@/components/EmailDialog';
+import { TreePine } from 'lucide-react';
 
 const Index = () => {
   const [mode, setMode] = useState<'start' | 'review' | 'result'>('start');
@@ -111,8 +112,10 @@ const Index = () => {
         )}
       </div>
 
-      <footer className="text-center py-8 text-christmas-gold/80 font-christmas text-xl relative z-10">
+      <footer className="text-center py-8 text-white font-christmas text-xl relative z-10 flex items-center justify-center gap-3">
+        <TreePine className="w-6 h-6" />
         Noël FAF 2025
+        <TreePine className="w-6 h-6" />
       </footer>
 
       <EmailDialog 
