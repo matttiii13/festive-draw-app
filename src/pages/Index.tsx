@@ -111,6 +111,10 @@ const Index = () => {
         )}
       </div>
 
+      <footer className="text-center py-8 text-christmas-gold/80 font-christmas text-xl relative z-10">
+        Noël FAF 2025
+      </footer>
+
       <EmailDialog 
         open={dialogOpen}
         onOpenChange={setDialogOpen}
