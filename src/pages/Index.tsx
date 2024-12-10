@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
 import SnowAnimation from '@/components/SnowAnimation';
-import ConsultForm from '@/components/ConsultForm';
 import ReviewResult from '@/components/ReviewResult';
 import GiftReveal from '@/components/GiftReveal';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/lib/supabase';
 import { Card } from '@/components/ui/card';
+import EmailDialog from '@/components/EmailDialog';
 
 const Index = () => {
-  const [mode, setMode] = useState<'start' | 'consult' | 'review' | 'result'>('start');
+  const [mode, setMode] = useState<'start' | 'review' | 'result'>('start');
   const [result, setResult] = useState<string | null>(null);
   const [participants, setParticipants] = useState<Array<{ name: string, consulted: boolean }>>([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedParticipant, setSelectedParticipant] = useState<{ name: string } | null>(null);
 
   useEffect(() => {
     const fetchParticipants = async () => {
@@ -28,11 +30,18 @@ const Index = () => {
     };
 
     fetchParticipants();
-  }, [mode]); // Refresh when mode changes to update status
+  }, [mode, dialogOpen]); // Refresh when mode or dialog state changes
 
   const handleResult = (newResult: string) => {
     setResult(newResult);
     setMode('result');
+  };
+
+  const handleCardClick = (participant: { name: string, consulted: boolean }) => {
+    if (!participant.consulted) {
+      setSelectedParticipant({ name: participant.name });
+      setDialogOpen(true);
+    }
   };
 
   return (
@@ -50,7 +59,8 @@ const Index = () => {
               {participants.map((participant) => (
                 <Card 
                   key={participant.name}
-                  className={`p-4 text-center transition-all ${
+                  onClick={() => handleCardClick(participant)}
+                  className={`p-4 text-center transition-all cursor-pointer ${
                     participant.consulted 
                       ? 'bg-gray-300/20 text-gray-400'
                       : 'bg-white/10 hover:bg-white/20'
@@ -63,26 +73,16 @@ const Index = () => {
                 </Card>
               ))}
             </div>
-            <div className="space-y-4">
-              <Button
-                onClick={() => setMode('consult')}
-                className="w-full bg-christmas-red hover:bg-christmas-red/90 text-xl py-6"
-              >
-                🎁 Consulter mon résultat
-              </Button>
+            <div className="text-center">
               <Button
                 onClick={() => setMode('review')}
                 variant="outline"
-                className="w-full text-christmas-gold hover:text-christmas-gold/90"
+                className="text-christmas-gold hover:text-christmas-gold/90"
               >
                 Revoir mon résultat
               </Button>
             </div>
           </>
-        )}
-
-        {mode === 'consult' && (
-          <ConsultForm onResult={handleResult} />
         )}
 
         {mode === 'review' && (
@@ -102,6 +102,13 @@ const Index = () => {
           </div>
         )}
       </div>
+
+      <EmailDialog 
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        participant={selectedParticipant}
+        onResult={handleResult}
+      />
     </div>
   );
 };
