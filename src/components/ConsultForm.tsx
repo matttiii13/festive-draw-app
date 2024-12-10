@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Select } from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
 
 const ConsultForm = ({ onResult }: { onResult: (result: string) => void }) => {
@@ -47,14 +47,29 @@ const ConsultForm = ({ onResult }: { onResult: (result: string) => void }) => {
     <form onSubmit={handleSubmit} className="space-y-6">
       {step === 1 && (
         <div className="space-y-4">
-          <Select
-            value={name}
-            onValueChange={setName}
-            placeholder="Sélectionne ton nom"
-          >
-            <option value="Le Mati">Le Mati</option>
-            <option value="Le Yo">Le Yo</option>
-            {/* ... autres noms */}
+          <Select value={name} onValueChange={setName}>
+            <SelectTrigger>
+              <SelectValue placeholder="Sélectionne ton nom" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Le Mati">Le Mati</SelectItem>
+              <SelectItem value="Le Yo">Le Yo</SelectItem>
+              <SelectItem value="Le No">Le No</SelectItem>
+              <SelectItem value="Le Jc">Le Jc</SelectItem>
+              <SelectItem value="L'artiste">L'artiste</SelectItem>
+              <SelectItem value="Le Nel">Le Nel</SelectItem>
+              <SelectItem value="Le Bourin">Le Bourin</SelectItem>
+              <SelectItem value="La Lichette">La Lichette</SelectItem>
+              <SelectItem value="Le Beu">Le Beu</SelectItem>
+              <SelectItem value="Le Gui">Le Gui</SelectItem>
+              <SelectItem value="Le mu">Le mu</SelectItem>
+              <SelectItem value="Le Bert">Le Bert</SelectItem>
+              <SelectItem value="La Wii">La Wii</SelectItem>
+              <SelectItem value="Le Pap">Le Pap</SelectItem>
+              <SelectItem value="Kuju">Kuju</SelectItem>
+              <SelectItem value="Pierre Yves">Pierre Yves</SelectItem>
+              <SelectItem value="Gui Mallein">Gui Mallein</SelectItem>
+            </SelectContent>
           </Select>
           <Button 
             onClick={() => name && setStep(2)}
