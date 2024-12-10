@@ -23,9 +23,9 @@ const GiftReveal = ({ result }: { result: string }) => {
           isOpen ? 'opacity-100' : 'opacity-0'
         }`}
       >
-        <p className="text-2xl font-christmas text-christmas-red text-center">
+        <p className="text-2xl font-christmas text-white text-center">
           Tu dois offrir un cadeau à:<br />
-          <span className="text-3xl font-bold text-christmas-gold">
+          <span className="text-3xl font-bold text-white">
             {result}
           </span>
         </p>
