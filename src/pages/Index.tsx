@@ -30,7 +30,7 @@ const Index = () => {
     };
 
     fetchParticipants();
-  }, [mode, dialogOpen]); // Refresh when mode or dialog state changes
+  }, [mode, dialogOpen]);
 
   const handleResult = (newResult: string) => {
     setResult(newResult);
@@ -49,27 +49,35 @@ const Index = () => {
       <SnowAnimation />
       
       <div className="container max-w-4xl mx-auto pt-20 px-4 relative z-10">
-        <h1 className="text-4xl md:text-5xl font-christmas text-center mb-8 text-christmas-gold">
+        <h1 className="text-4xl md:text-5xl font-christmas text-center mb-12 text-christmas-gold drop-shadow-lg">
           🎄 Tirage au Sort de Noël 🎄
         </h1>
 
         {mode === 'start' && (
           <>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
               {participants.map((participant) => (
                 <Card 
                   key={participant.name}
                   onClick={() => handleCardClick(participant)}
-                  className={`p-4 text-center transition-all cursor-pointer ${
+                  className={`transform transition-all duration-200 ${
                     participant.consulted 
-                      ? 'bg-gray-300/20 text-gray-400'
-                      : 'bg-white/10 hover:bg-white/20'
-                  }`}
+                      ? 'bg-gray-700/30 cursor-not-allowed'
+                      : 'bg-white/10 hover:bg-white/20 hover:scale-105 cursor-pointer'
+                  } backdrop-blur-sm border-white/20`}
                 >
-                  <p className="font-medium">{participant.name}</p>
-                  <p className="text-sm mt-1">
-                    {participant.consulted ? '✓ A participé' : 'En attente'}
-                  </p>
+                  <div className="p-6 text-center">
+                    <p className={`text-xl font-semibold mb-2 ${
+                      participant.consulted ? 'text-gray-400' : 'text-white'
+                    }`}>
+                      {participant.name}
+                    </p>
+                    <p className={`text-sm ${
+                      participant.consulted ? 'text-gray-500' : 'text-white/80'
+                    }`}>
+                      {participant.consulted ? '✓ A participé' : 'Cliquez pour participer'}
+                    </p>
+                  </div>
                 </Card>
               ))}
             </div>
@@ -77,7 +85,7 @@ const Index = () => {
               <Button
                 onClick={() => setMode('review')}
                 variant="outline"
-                className="text-christmas-gold hover:text-christmas-gold/90"
+                className="text-christmas-gold hover:text-christmas-gold/90 border-christmas-gold/50 hover:border-christmas-gold"
               >
                 Revoir mon résultat
               </Button>
@@ -95,7 +103,7 @@ const Index = () => {
             <Button
               onClick={() => setMode('start')}
               variant="outline"
-              className="mt-8 text-christmas-gold hover:text-christmas-gold/90"
+              className="mt-8 text-christmas-gold hover:text-christmas-gold/90 border-christmas-gold/50 hover:border-christmas-gold"
             >
               Retour à l'accueil
             </Button>
